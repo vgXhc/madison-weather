@@ -1,9 +1,8 @@
 on:
   workflow_dispatch:
-#  schedule:
-#    - cron: "0 * * * *"
 
-name: Milwaukee weather update
+
+name: Madison weather update
 
 jobs:
   render:
