@@ -5,7 +5,7 @@ library(dplyr)
 library(lubridate)
 library(stringr)
 
-ghcn <- read_csv("data/GHCN_USW00014839.csv") %>%
+ghcn <- read_csv("data/GHCN_USW00014837.csv") %>%
   group_by(year) %>%
   arrange(day_of_year) %>%
   mutate(cum_precip = cumsum(PRCP)) %>%
@@ -82,7 +82,7 @@ cum.precip.graph <- daily.summary.stats %>%
             aes(y = cum_precip), lwd = 1.2) +
   ggrepel::geom_label_repel(data = filter(this.year, day_of_year == max(day_of_year)),
                             aes(y = cum_precip, label = round(cum_precip, 1)),
-                            point.padding = 5, direction = "y", alpha = 0.5) +
+                            point.padding = 5, direction = "y", alpha = 0.8) +
   geom_segment(data = pctile.labels, aes(x = 365, xend = 367, y = precip, yend = precip)) +
   geom_text(data = pctile.labels, aes(367.5, precip, label = pctile),
             hjust = 0, family = "serif", size = 3) +
@@ -94,7 +94,7 @@ cum.precip.graph <- daily.summary.stats %>%
                      breaks = month.breaks$day_of_year + 15,
                      labels = month.breaks$month_name,
                      name = NULL) +
-  labs(title = "Cumulative annual precipitation at Milwaukee's Mitchell Airport",
+  labs(title = "Cumulative annual precipitation at Madison Truax Field",
        subtitle = paste("The line shows precipitation for",
                         paste0(lubridate::year(last.date), "."),
                         "The ribbons cover the",
@@ -113,5 +113,5 @@ cum.precip.graph <- daily.summary.stats %>%
 
 cum.precip.graph
 
-ggsave("graphs/AnnualCumulativePrecipitation_USW00014839.png", plot = cum.precip.graph,
-       width = 8, height = 4)
+ggsave("graphs/AnnualCumulativePrecipitation_USW00014837.png", plot = cum.precip.graph,
+      width = 8, height = 4)

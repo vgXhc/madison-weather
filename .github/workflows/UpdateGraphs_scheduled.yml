@@ -2,7 +2,7 @@ on:
  schedule:
    - cron: "0 18 * * *"
 
-name: Milwaukee weather update
+name: Madison weather update
 
 jobs:
   render:
@@ -36,7 +36,7 @@ jobs:
         with:
           timeout_seconds: 30
           max_attempts: 3
-          command: Rscript -e 'source("R/Retrieve_GHCN_USW00014839.R")'
+          command: Rscript -e 'source("R/Retrieve_GHCN_USW00014837.R")'
           continue_on_error: true
       - name: Commit data
         uses: stefanzweifel/git-auto-commit-action@v4

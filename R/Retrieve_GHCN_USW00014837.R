@@ -6,12 +6,15 @@ library(tidyr)
 # station readme
 #   https://www1.ncdc.noaa.gov/pub/data/ghcn/daily/by_station/readme-by_station.txt
 
-# data readme
-#   https://www1.ncdc.noaa.gov/pub/data/ghcn/daily/readme.txt
+# # data readme
+# #   https://www1.ncdc.noaa.gov/pub/data/ghcn/daily/readme.txt
+# stations <- tempfile()
+# #download.file("https://www.ncei.noaa.gov/pub/data/ghcn/daily/ghcnd-inventory.txt", stations)
+
 
 # download the zipped file
 temp <- tempfile()
-download.file("https://www1.ncdc.noaa.gov/pub/data/ghcn/daily/by_station/USW00014839.csv.gz",temp)
+download.file("https://www1.ncdc.noaa.gov/pub/data/ghcn/daily/by_station/USW00014837.csv.gz",temp)
 
 # unzip and read
 ghcn <- read_csv(temp,
@@ -36,8 +39,12 @@ ghcn.wide <- ghcn %>%
   mutate(TMAX = ((TMAX / 10) * (9/5)) + 32,
          TMIN = ((TMIN / 10) * (9/5)) + 32) %>%
   mutate(date = as.Date(paste(year, month, day, sep = "-")),
-         day_of_year = lubridate::yday(date)) %>%
+         day_of_year = case_when(
+           lubridate::leap_year(date) & lubridate::yday(date) == 60 ~ NA_real_,
+           lubridate::leap_year(date) & lubridate::yday(date) > 60 ~ lubridate::yday(date) -1,
+           TRUE ~ lubridate::yday(date))) %>%
   select(year, month, day, date, day_of_year, PRCP, SNOW, SNWD,
-         TMAX, TMIN)
+         TMAX, TMIN) 
 
-write_csv(ghcn.wide, "data/GHCN_USW00014839.csv")
+write_csv(ghcn.wide, "data/GHCN_USW00014837.csv")
+

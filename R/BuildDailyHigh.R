@@ -5,7 +5,7 @@ library(dplyr)
 library(lubridate)
 library(stringr)
 
-ghcn <- read_csv("data/GHCN_USW00014839.csv")
+ghcn <- read_csv("data/GHCN_USW00014837.csv")
 
 year.to.plot <- max(ghcn$year)
 last.date <- max(ghcn$date)
@@ -91,7 +91,7 @@ max.graph <- daily.summary.stats %>%
                      breaks = month.breaks$day_of_year + 15,
                      labels = month.breaks$month_name,
                      name = NULL) +
-  labs(title = "Daily High Temperature at Milwaukee's Mitchell Airport",
+  labs(title = "Daily High Temperature at Madison Truax Field",
        subtitle = paste("The line shows daily highs for",
                         paste0(lubridate::year(last.date), "."),
                         "The ribbons cover the",
@@ -157,7 +157,9 @@ legend.labels <- legend.df %>%
   filter(day_of_year == filter_day)
 
 ##  Add legend
-max.graph2 <- max.graph +
+
+  
+max.graph2 <-max.graph +
   # ribbon between the lowest and 5th percentiles
   geom_ribbon(data = legend.df,
               aes(ymin = min, ymax = max),
@@ -195,8 +197,8 @@ max.graph2 <- max.graph +
                            aes(y = value, label = label),
                            min.segment.length = 0, size = 3,
                            direction = "y", hjust = 1, nudge_x = -5)
-
-ggsave("graphs/DailyHighTemp_USW00014839.png", plot = max.graph2,
+max.graph2
+ggsave("graphs/DailyHighTemp_USW00014837.png", plot = max.graph2,
        width = 8, height = 4)
 
 
