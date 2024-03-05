@@ -11,4 +11,6 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ![Daily High Temperature in Madison](DailyHighTemp_USW00014837.png)
 
+![Cumulative Annual Precipitation in Madison](AnnualCumulativePrecipitation_USW00014837.png)
+
 This is a fork of @jdjohn215's [Milwaukee Weather](https://github.com/jdjohn215/milwaukee-weather) repo. The code is slightly modified to better handle leap years (and of course to download data for Madison, Wisconsin.)
