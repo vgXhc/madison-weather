@@ -18,7 +18,7 @@ jobs:
           install-r: false
           # use RStudio's CRAN mirror with precompiled binaries
           use-public-rspm: true
-          - name: Install required packages
+      - name: Install required packages
         run: Rscript -e 'install.packages(c("tidyverse"), dependencies = TRUE)'
       - name: Retrieve data
         uses: nick-fields/retry@v3
