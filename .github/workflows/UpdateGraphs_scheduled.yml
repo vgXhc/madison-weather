@@ -13,7 +13,7 @@ jobs:
     env:
       RENV_PATHS_ROOT: ~/.local/share/renv
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: r-lib/actions/setup-r@v2
         with:
           # don't reinstall R
@@ -21,7 +21,7 @@ jobs:
           # use RStudio's CRAN mirror with precompiled binaries
           use-public-rspm: true
       - name: Cache packages
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ${{ env.RENV_PATHS_ROOT }}
           key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
@@ -33,14 +33,14 @@ jobs:
           if (!requireNamespace("renv", quietly = TRUE)) install.packages("renv")
           renv::restore()
       - name: Retrieve data
-        uses: nick-fields/retry@v2
+        uses: nick-fields/retry@v3
         with:
-          timeout_seconds: 30
+          timeout_seconds: 60
           max_attempts: 3
           command: Rscript -e 'source("R/Retrieve_GHCN_USW00014837.R")'
           continue_on_error: true
       - name: Commit data
-        uses: stefanzweifel/git-auto-commit-action@v4
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: Update data
       - name: Build temperature graph
@@ -48,6 +48,6 @@ jobs:
       - name: Build precipitation graph
         run:  Rscript -e 'source("R/BuildCumulativePrecipitation.R")'
       - name: Commit graphs
-        uses: stefanzweifel/git-auto-commit-action@v4
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: Update graphs
