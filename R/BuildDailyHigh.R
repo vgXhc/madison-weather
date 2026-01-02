@@ -97,7 +97,7 @@ max.graph <- daily.summary.stats %>%
                         "The ribbons cover the",
                         "historical range. The last date shown is", 
                         format(last.date, "%b %d, %Y.")),
-       caption = paste("Records begin on April 1, 1938.",
+       caption = paste("*Records begin on April 1, 1938.",
                        "This graph was last updated on", format(Sys.Date(), "%B %d, %Y."))) +
   theme(panel.background = element_blank(),
         panel.border = element_blank(),
@@ -182,10 +182,10 @@ max.graph2 <-max.graph +
   geom_point(aes(x = 189, y = legend.line.df$temp[legend.line.df$day_of_year == 189]),
              color = "red") +
   geom_text(aes(x = 180, y = legend.line.df$temp[legend.line.df$day_of_year == 177] - 2,
-                label = "all-time record low set this year"),
+                label = "record* low set this year"),
             hjust = 0, size = 3) +
   geom_text(aes(x = 192, y = legend.line.df$temp[legend.line.df$day_of_year == 189] + 2,
-                label = "all-time record high set this year"),
+                label = "record* high set this year"),
             hjust = 0, size = 3) +
   ggrepel::geom_text_repel(data = filter(legend.labels,
                                          filter_day == max(filter_day)),
